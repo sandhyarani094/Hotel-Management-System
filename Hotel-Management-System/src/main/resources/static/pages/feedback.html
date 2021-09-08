@@ -1,0 +1,8 @@
+<div class="container" ng-controller="employeeController">
+	<div>
+        <h2>{{rating.current}} /
+            {{rating.max}}</h2>
+            <div star-rating rating-value="rating.current" max="rating.max" on-rating-selected="getSelectedRating(rating)"></div>
+            
+    </div>
+</div>

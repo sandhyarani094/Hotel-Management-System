@@ -1,0 +1,84 @@
+<body ng-controller="checkoutController">
+    <div ng-include src="'pages/navbar.html'"></div>
+    <h3 class="text-center">READY TO CHECK OUT</h3>
+    <hr>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Booking Id</th>
+                <th>Name</th>
+                <th>Address </th>
+                <th>Mobile No </th>
+                <th>check-in Date </th>
+                <th>Room No</th>
+                <th>Capacity</th>
+                <th>Room Type </th>
+                <th>price </th>
+                <th>&nbsp</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="detail in detailsOfCheckedInUser">
+                <td>{{detail.customerId}}</td>
+                <td>{{detail.name}}</td>
+                <td>{{detail.address}}</td>
+                <td>{{detail.mobileNo}}</td>
+                <td>{{detail.checkInDate}}</td>
+                <td>{{detail.roomNumber}}</td>
+                <td>{{detail.bed}}</td>
+                <td>{{detail.roomType}}</td>
+                <td>{{detail.price}}</td>
+                <td><button type="button" data-toggle="modal" data-target="#billModal" ng-click="checkout(detail.customerId,detail.roomNumber);generateBill(detail);" class="btn btn-success">Check Out</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <div id="billModal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">INVOICE</h4>
+                    <button ng-click="printDiv('billview');">Print <i class="fa fa-file"></i></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row bill" id="billview" ng-if="billviewStatus">
+                        <h3>Hotel Ashray</h3>
+                        <div class="row">
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 bill-heading">Room</div>
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 bill-heading">Name</div>
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 bill-heading">Checkin </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 bill-heading">Checkout </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 bill-heading">price</div>
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 bill-heading">days </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 bill-heading">discount</div>
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 bill-heading">gst</div>
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 bill-heading">Total</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 bill-body">{{billDetails.roomNumber}}</div>
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 bill-body">{{billDetails.name}}</div>
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 bill-body">{{billDetails.checkInDate}}</div>
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 bill-body">{{billDetails.checkOutDate | date}}</div>
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 bill-body">{{billDetails.price}}</div>
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 bill-body">{{billDetails.noOfDays}} </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 bill-body">{{billDetails.discount}}</div>
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 bill-body">{{billDetails.gst}}%</div>
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 bill-body">{{billDetails.total.toFixed(2)}}</div>
+                        </div>
+                        <div class="row bill-feedback">
+                            Thanks for visiting
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

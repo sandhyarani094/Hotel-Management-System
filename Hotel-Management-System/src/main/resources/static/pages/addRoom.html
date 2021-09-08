@@ -1,0 +1,49 @@
+<body class="container" ng-controller="addRoomController">
+    <div ng-include src="'pages/navbar.html'"></div>
+    <div class="container">
+    <form name="addRoomForm" novalidate>
+        <div class="row">
+            <div class="dropdown form-group col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                <lable for="floor"><b>Floor:</b> </label>
+                    <select class="form-control" ng-model="floor" ng-change="getNewRoomNumber()">
+                       
+                        <option ng-value="1">First Floor</option>
+                        <option ng-value="2">Second Floor</option>
+                    </select>
+            </div>
+            <div class="dropdown form-group col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                <lable for="roomtcapacity"><b>Room Capacity:</b></label>
+                    <select class="form-control" ng-model="room.roomsize">
+                        <option value="" selected disabled hidden>Choose here</option>
+                        <option value="1">Single</option>
+                        <option value="2">Double</option>
+                    </select>
+            </div>
+            <div class="dropdown form-group col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                <lable for="roomtype"><b>Room Type:</b></label>
+                    <select class="form-control" ng-model="room.roomtype">
+                        <option value="" selected disabled hidden>Choose here</option>
+                        <option value="AC">AC</option>
+                        <option value="NON-AC">NON-AC</option>
+                    </select>
+            </div>
+             <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <lable for="price"><b>price:</b></label> <input type="number" class="form-control" ng-model="room.price" id="price" placeholder="Enter price" name="price" required> <span style="color: red" ng-show="addRoomForm.price.$dirty && addRoomForm.price.$invalid"> <span ng-show="addRoomForm.price.$error.required">price is required.</span>
+                    </span>
+            </div>
+            <button ng-click="addRoom()" class="btn btn-primary text-center" style=" margin-top: 19px;">Submit
+            </button>
+        </div>
+    </form>
+    </div>
+     <div class="row">
+        <div ng-repeat="room in roomdetails">
+            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" ng-class="{available:room.status,occupied:!room.status}">
+               
+                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">Classic {{room.roomtype}}</div>
+                <div>{{room.roomnumber}}</div>
+            </div>
+        </div>
+    </div>
+    
+</body>

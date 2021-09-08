@@ -1,0 +1,87 @@
+<head>
+    <link rel="stylesheet" href="./css/food.css">
+</head>
+
+<body ng-controller="orderFoodController">
+	<div ng-include src="'pages/navbar.html'"></div>
+    <h3 class="text-center"><b>ORDER FOOD</b></h2>
+        <br>
+        <hr>
+        <div class="row">
+            <div ng-repeat="room in roomdetails" ng-if="!room.status">
+                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" ng-class="{available:room.status,occupied:!room.status}">
+                    <input class="col-lg-1 col-md-1 col-sm-1 col-xs-1" type="radio" name="roomnumber" ng-click="getCheckedInDetailsByRoomNo(room.roomnumber)">
+                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">Classic {{room.roomtype}}</div>
+                    <div>{{room.roomnumber}}</div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div ng-show="viewMenu">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Booking Id</th>
+                        <th>Name</th>
+                        <th>Address </th>
+                        <th>Mobile No </th>
+                        <th>check-in Date </th>
+                        <th>Room No</th>
+                        <th>Capacity</th>
+                        <th>Room Type </th>
+                        <th>price </th>
+                        <th>&nbsp</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="detail in detailsOfCheckedInUser">
+                        <td>{{detail.customerId}}</td>
+                        <td>{{detail.name}}</td>
+                        <td>{{detail.address}}</td>
+                        <td>{{detail.mobileNo}}</td>
+                        <td>{{detail.checkInDate}}</td>
+                        <td>{{detail.roomNumber}}</td>
+                        <td>{{detail.bed}}</td>
+                        <td>{{detail.roomType}}</td>
+                        <td>{{detail.price}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="menu-container">
+                <div class="menu-left-page">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th colspan="3">VEG GALLERY</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="veg in vegList" ng-if="veg.status">
+                                <td class="td-item">{{veg.itemName}}</td>
+                                <td class="td-czk">{{veg.mealType}}</td>
+                                <td class="td-eur">{{veg.price}}</td>
+                                <td><button type="button" ng-click="addVegItem(veg)" class="btn btn-success">Add</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="menu-right-page">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th colspan="3">NON-VEG MANIA</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="nonveg in nonvegList" ng-if="nonveg.status">
+                                <td class="td-item">{{nonveg.itemName}}</td>
+                                <td class="td-czk">{{nonveg.mealType}}</td>
+                                <td class="td-eur">{{nonveg.price}}</td>
+                                <td><button type="button" ng-click="" class="btn btn-danger">Add</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+</body>

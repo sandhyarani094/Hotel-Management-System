@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style type="text/css">
+    .emp-img {
+        width: 100%;
+    }
+
+    .card {
+        box-shadow: 10px 5px 5px #97c3d0;
+    }
+    </style>
+</head>
+
+<body ng-controller="employeeController">
+    <div ng-include src="'pages/navbar.html'"></div>
+    <div style="float: right; margin-right: 10px;">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addEmpModal">Add Employee</button>
+    </div>
+    <br>
+    <div class="row card col-lg-1 col-md-1 col-sm-1 col-xs-1" ng-repeat="emp in employeeList" ng-class="{greybackground:!emp.employmentStatus ,whitebackground:emp.employmentStatus}">
+        <img class="card-img-top emp-img" ng-if="emp.gender=='Male'" src="./asset/avatar.png" alt="Card image cap">
+        <img class="card-img-top emp-img" ng-if="emp.gender=='Female'" src="./asset/avatar-female.png" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title"><b>{{emp.employeeName | uppercase}}</b></h5>
+            <h6 class="card-title"><b>{{emp.designation | uppercase}}</b></h6>
+           <!--  {{emp.rating}}
+            <div class="rate">
+                    <input type="radio" ng-model="emp.rating" id="star5" name="rate" ng-value="5" />
+                    <label for="star5" title="text">5 stars</label>
+                    <input type="radio" ng-model="emp.rating" id="star4" name="rate" ng-value="4" />
+                    <label for="star4" title="text">4 stars</label>
+                    <input type="radio" ng-model="emp.rating" id="star3" name="rate" ng-value="3" />
+                    <label for="star3" title="text">3 stars</label>
+                    <input type="radio" ng-model="emp.rating" id="star2" name="rate" ng-value="2" />
+                    <label for="star2" title="text">2 stars</label>
+                    <input type="radio"ng-model="emp.rating" id="star1" name="rate" ng-value="1" />
+                    <label for="star1" title="text">1 star</label>
+                </div> -->
+            <div>
+                <button type="button" ng-click="showEmp(emp)" class="btn btn-info btn-xs display-inline-block" data-toggle="modal" data-target="#myModal">Info</button>
+                <button class="btn btn-danger btn-xs display-inline-block" ng-click="reliveEmployee(emp.employeeId)" ng-if="emp.employmentStatus">Relive</button>
+                <button class="btn btn-danger btn-xs display-inline-block" disabled ng-if="!emp.employmentStatus">NA</button>
+            </div>
+            <br>
+        </div>
+    </div>
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <h3 class="text-center"> {{viewemp.employeeName | uppercase }}</h3>
+                    <p><b>DESIGNATION</b> :{{viewemp.designation| uppercase }}</p>
+                    <p><b>AGE </b> :{{viewemp.employeeAge| uppercase }}</p>
+                    <p><b>DATE OF JOINING</b> :{{viewemp.dateOfJoining | uppercase }}</p>
+                    <p ng-if="viewemp.dateOfRelive!=null"><b>DATE OF RELIVE</b> :{{viewemp.dateOfRelive | uppercase }}</p>
+                    <p><b>VACCINATION STATUS</b>:{{viewemp.vaccinationStatus | uppercase }}</p>
+                    <p><b>EMPLOYMENT STATUS</b> :{{viewemp.employmentStatus| uppercase }}</p>
+                    <p><b>SALARY</b> :{{viewemp.employeeSalary | uppercase }}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form name="myForm" novalidate>
+        <div class="modal fade" id="addEmpModal" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label for="name">Name:</label> <input type="text" class="form-control" ng-model="employee.employeeName" id="Name" placeholder="Enter your name" name="name" required> <span style="color: red" ng-show="myForm.name.$dirty && myForm.name.$invalid"> <span ng-show="myForm.name.$error.required">Name is required.</span>
+                            </span>
+                        </div>
+                        <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label for="age">Age:</label> <input type="number" class="form-control" ng-model="employee.employeeAge" id="age" placeholder="Enter age " name="age" required>
+                            <span style="color: red" ng-show="myForm.age.$dirty && myForm.age.$invalid">
+                                <span ng-show="myForm.age.$error.required">age is
+                                    required.</span>
+                            </span>
+                        </div>
+                        <div class="dropdown form-group col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            <lable for="gender"><b>Gender:</b></label>
+                                <select class="form-control" ng-model="employee.gender">
+                                    <option value="" selected disabled hidden>Choose here</option>
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                </select>
+                        </div>
+                        <div class="dropdown form-group col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            <lable for="designation"><b>Designation:</b></label>
+                                <select class="form-control" ng-model="employee.designation">
+                                    <option value="" selected disabled hidden>Choose here</option>
+                                    <option>Manager</option>
+                                    <option>Waiter</option>
+                                    <option>Assistant</option>
+                                    <option>Attendant</option>
+                                    <option>Cook</option>
+                                    <option>Cleaner</option>
+                                </select>
+                        </div>
+                        <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label for="dateofjoining"><b>Date of Joining:</b></label> <input type="date" class="form-control" ng-model="employee.dateOfJoining" id="dateofjoining" placeholder="Enter dateofjoining" name="dateofjoining" required> <span style="color: red" ng-show="myForm.dateofjoining.$dirty && myForm.dateofjoining.$invalid"> <span ng-show="myForm.dateofjoining.$error.required">dateofjoining is required.</span>
+                            </span>
+                        </div>
+                        <!--  <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label for="dateofrelive"><b>Date of Relive:</b></label> <input type="date" class="form-control" ng-model="employee.dateOfRelive" id="dateofrelive" placeholder="Enter dateofrelive" name="dateofrelive" required> <span style="color: red" ng-show="myForm.dateofrelive.$dirty && myForm.dateofrelive.$invalid"> <span ng-show="myForm.dateofrelive.$error.required">Date of relive is required.</span>
+                            </span>
+                        </div> -->
+                        <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label for="salary">Salary:</label> <input type="number" class="form-control" ng-model="employee.employeeSalary" id="salary" placeholder="Enter salary" name="salary" required> <span style="color: red" ng-show="myForm.salary.$dirty && myForm.salary.$invalid"> <span ng-show="myForm.salary.$error.required">salary is required.</span>
+                            </span>
+                        </div>
+                        <div class="dropdown form-group col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <lable for="vaccinationstatus"><b>VaccinationStatus:</b></label>
+                                <select class="form-control" ng-model="employee.vaccinationStatus">
+                                    <option value="" selected disabled hidden>Choose here</option>
+                                    <option>Vaccinated</option>
+                                    <option>Partially-Vaccinated</option>
+                                    <option>Not-Vaccinated</option>
+                                </select>
+                        </div>
+                        <button type="button" class="btn btn-success text-center" ng-click="addEmployee()" data-dismiss="modal">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--..........Ratings..............-->
+</body>
+
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+ 
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Home</title>
+    <style type="text/css">
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        background: url('./asset/bluehotelimage.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+
+    }
+    </style>
+</head>
+
+<body class="container" ng-controller="homeController">
+    <div ng-include src="'pages/navbar.html'"></div>
+    <h2 class="text-center font-color-white">CHECK IN</h2>
+    <form name="checkinForm" novalidate>
+        <div class="row">
+            <div class="dropdown form-group col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                <lable class="font-color-white" for="roomtcapacity">Room Capacity:</label>
+                    <select class="form-control" ng-model="checkinuser.bed">
+                        <option value="" selected disabled hidden>Choose here</option>
+                        <option value="1">Single</option>
+                        <option value="2">Double</option>
+                    </select>
+            </div>
+            <div class="dropdown form-group col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                <lable class="font-color-white" for="roomtype">Room Type:</label>
+                    <select class="form-control" ng-model="checkinuser.roomtype">
+                        <option value="" selected disabled hidden>Choose here</option>
+                        <option value="AC">AC</option>
+                        <option value="NON-AC">NON-AC</option>
+                    </select>
+            </div>
+            <button style="margin-top: 15px" ng-click="getRoomDetails()" class="btn btn-info">Get Room Details
+            </button>
+           
+                <div class="row">
+        <div ng-repeat="room in roomdetails">
+            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" ng-class="{available:room.status,occupied:!room.status}">
+                <input class="col-lg-1 col-md-1 col-sm-1 col-xs-1" type="radio" ng-if="room.status" name="roomnumber" ng-click="getSelectedRoomNumber(room)" ng-value="room">
+                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">Classic {{room.roomtype}}</div>
+                <div>{{room.roomnumber}}</div>
+            </div>
+        </div>
+    </div>
+    <hr>
+     <div class="row">
+            </div>
+            <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <lable class="font-color-white" for="name">Name:</label> <input type="text" class="form-control" ng-model="checkinuser.name" id="Name" placeholder="Enter your name" name="name" required> <span style="color: red" ng-show="checkinForm.name.$dirty && checkinForm.name.$invalid"> <span ng-show="checkinForm.name.$error.required">Name is required.</span>
+                    </span>
+            </div>
+            <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <lable class="font-color-white" for="email">Email:</label> <input type="text" class="form-control" ng-model="checkinuser.email" id="email" placeholder="Enter email" name="email" required>
+                    <span style="color: red" ng-show="checkinForm.email.$dirty && checkinForm.email.$invalid">
+                        <span ng-show="checkinForm.email.$error.required">email is
+                            checkinFormrequired.</span>
+                    </span>
+            </div>
+        
+            <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <lable class="font-color-white" for="mobileNo">mobileNo:</label> <input type="text" class="form-control" ng-model="checkinuser.mobileNo" id="mobileNo" placeholder="Enter mobileNo" name="mobileNo" required> <span style="color: red" ng-show="checkinForm.mobileNo.$dirty && checkinForm.mobileNo.$invalid"> <span ng-show="checkinForm.mobileNo.$error.required">mobileNo is required.</span>
+                    </span>
+            </div>
+             <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <lable class="font-color-white" for="address">Address:</label> <input type="text" class="form-control" ng-model="checkinuser.address" id="address" placeholder="Enter address" name="address" required> <span style="color: red" ng-show="checkinForm.address.$dirty && checkinForm.address.$invalid"> <span ng-show="checkinForm.address.$error.required">address is required.</span>
+                    </span>
+            </div>
+            <!-- <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+               <lable class="font-color-white" for="nationality">Nationality:</label> <input type="text" class="form-control" ng-model="checkinuser.nationality" id="nationality" placeholder="Enter nationality" name="nationality" required> <span style="color: red" ng-show="checkinForm.nationality.$dirty && checkinForm.nationality.$invalid"> <span ng-show="checkinForm.nationality.$error.required">nationality is required.</span>
+                </span>
+            </div> -->
+            <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <lable class="font-color-white" for="checkInDate">checkInDate:</label> <input type="date" class="form-control" ng-model="checkinuser.checkInDate" id="checkInDate" placeholder="Enter checkInDate" name="checkInDate">
+                    <!-- <span style="color: red" ng-show="checkinForm.checkInDate.$dirty && checkinForm.checkInDate.$invalid"> <span ng-show="checkinForm.checkInDate.$error.required">checkInDate is required.</span>
+                </span> -->
+            </div>
+           <!--  <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <lable class="font-color-white" for="idProof">IdProof:</label> <input type="text" class="form-control" ng-model="checkinuser.idProof" id="idProof" placeholder="Enter idProof" name="idProof" required> <span style="color: red" ng-show="checkinForm.idProof.$dirty && checkinForm.idProof.$invalid"> <span ng-show="checkinForm.idProof.$error.required">idProof is required.</span>
+                    </span>
+            </div> -->
+             <div class="dropdown form-group col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                <lable class="font-color-white" for="idProof">Id Proof Type:</label>
+                    <select class="form-control" ng-model="checkinuser.idProof">
+                        <option value="" selected disabled hidden>Choose here</option>
+                        <option>Adhar Card</option>
+                        <option>Voter Id</option>
+                        <option>Pan Card</option>
+                    </select>
+            </div>
+           
+            <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <lable class="font-color-white" for="price">price:</label> <input type="number" class="form-control" ng-model="checkinuser.price" id="price" placeholder="Enter price" name="price" required disabled=""> <span style="color: red" ng-show="checkinForm.price.$dirty && checkinForm.price.$invalid"> <span ng-show="checkinForm.price.$error.required">price is required.</span>
+                    </span>
+            </div>
+            <div class="dropdown form-group col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                <lable class="font-color-white" for="gender">Gender:</label>
+                    <select class="form-control" ng-model="checkinuser.gender">
+                        <option value="" selected disabled hidden>Choose here</option>
+                        <option>Male</option>
+                        <option>Female</option>
+                        <option>Other</option>
+                    </select>
+            </div>
+            <div class="dropdown form-group col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                <lable class="font-color-white" for="nationality">Nationality:</label>
+                    <select class="form-control" ng-model="checkinuser.nationality">
+                        <option value="" selected disabled hidden>Choose here</option>
+                        <option>Indian</option>
+                        <option>other</option>
+                    </select>
+            </div>
+            
+          
+        </div>
+    </form>
+    
+    <button ng-click="allocateRoom()" ng-if="allocateRoomStatus" class="btn btn-info">Allocate room
+    </button>
+</body>
+
+</html>
